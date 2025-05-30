@@ -1,4 +1,5 @@
 # 🔥 Roasted MCP
+<img width="643" alt="Screenshot 2025-05-30 at 10 47 30 AM" src="https://github.com/user-attachments/assets/2e369015-c703-47f2-ba77-217cbc65d160" />
 
 An MCP (Model Context Protocol) server that hilariously roasts you based on your browser history patterns. Because someone needs to call out your 3 AM Wikipedia rabbit holes and your questionable shopping habits.
 
