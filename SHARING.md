@@ -9,13 +9,13 @@
 ```
 🔥 Found a tool that roasts you based on your browser history 
 
-Setup: `git clone <repo> && cd roasted && ./setup.sh`
+Setup: `git clone https://github.com/notactuallytreyanastasio/roasted.git && cd roasted && ./setup.sh`
 Demo: `node demo.js` 
 Then ask Claude to roast your browsing habits
 
 Warning: May cause existential crisis about your productivity 😅
 
-[Link to repo]
+https://github.com/notactuallytreyanastasio/roasted
 ```
 
 ### For Twitter/X
@@ -27,7 +27,7 @@ Warning: May cause existential crisis about your productivity 😅
 "You've perfected turning a 5-minute task into a 5-hour Reddit spiral"
 
 5 min setup, works with Claude Desktop
-[Link] 
+https://github.com/notactuallytreyanastasio/roasted
 
 #AI #MCP #Productivity #Roasted
 ```
@@ -47,7 +47,7 @@ Features:
 
 Example roast: "Your online shopping habit is single-handedly funding Jeff Bezos's space program"
 
-[Link to repo]
+https://github.com/notactuallytreyanastasio/roasted
 
 Perfect for team bonding through mutual digital embarrassment 😂
 ```
@@ -67,7 +67,7 @@ Sample roast: "You've visited social media 67 times. That's not engagement, that
 
 Perfect for team building... or team destruction 😅
 
-[Link]
+https://github.com/notactuallytreyanastasio/roasted
 ```
 
 ## 🎪 Demo Strategy
@@ -166,7 +166,7 @@ Welcome to the team! Here's your setup checklist:
 - [ ] Get access to company tools
 - [ ] Get roasted by your browser history (builds character)
 
-Run: `git clone <roasted-repo> && cd roasted && ./setup.sh`
+Run: `git clone https://github.com/notactuallytreyanastasio/roasted.git && cd roasted && ./setup.sh`
 ```
 
 ### Team Retrospectives

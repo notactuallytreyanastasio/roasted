@@ -23,10 +23,25 @@ If that doesn't work, continue with the specific issues below.
 - `SQLITE_CANTOPEN: unable to open database file`
 - No browser history found despite active browsing
 
-**Root Cause:** macOS is blocking access to browser databases.
+**Root Cause:** Operating system is blocking access to browser databases.
 
-**Solution:**
+**Solutions by Platform:**
 
+#### 🪟 Windows
+1. **Run as Administrator:**
+   - Right-click Command Prompt/PowerShell → "Run as administrator"
+   - Navigate to project folder and try again
+
+2. **Check File Permissions:**
+   - Browser data location: `%LOCALAPPDATA%\Google\Chrome\User Data\Default\History`
+   - Right-click folder → Properties → Security
+   - Ensure your user has "Read" permissions
+
+3. **Antivirus/Security Software:**
+   - Temporarily disable real-time protection
+   - Add project folder to antivirus exclusions
+
+#### 🍎 macOS
 1. **Grant Full Disk Access to Claude Desktop:**
    - Open **System Preferences** → **Security & Privacy** → **Privacy**
    - Select **Full Disk Access** from the left sidebar
@@ -38,6 +53,18 @@ If that doesn't work, continue with the specific issues below.
    ```bash
    # Quit Claude Desktop completely
    # Restart it from Applications folder
+   ```
+
+#### 🐧 Linux
+1. **Check File Permissions:**
+   ```bash
+   ls -la ~/.config/google-chrome/Default/History
+   # Should show read permissions for your user
+   ```
+
+2. **Fix permissions if needed:**
+   ```bash
+   chmod 644 ~/.config/google-chrome/Default/History
    ```
 
 3. **Verify permissions worked:**
@@ -66,7 +93,19 @@ If that doesn't work, continue with the specific issues below.
 #### 1. Browser Profile Issues
 Different browser profiles have separate history databases.
 
-**Check:**
+**Check by Platform:**
+
+**Windows:**
+```cmd
+# List all Chrome profiles
+dir "%LOCALAPPDATA%\Google\Chrome\User Data"
+# Look for: Default, Profile 1, Profile 2, etc.
+
+# Check Edge profiles
+dir "%LOCALAPPDATA%\Microsoft\Edge\User Data"
+```
+
+**macOS:**
 ```bash
 # List all Chrome profiles
 ls -la ~/Library/Application\ Support/Google/Chrome/
@@ -74,6 +113,13 @@ ls -la ~/Library/Application\ Support/Google/Chrome/
 
 # List all Safari databases  
 ls -la ~/Library/Safari/
+```
+
+**Linux:**
+```bash
+# List all Chrome profiles
+ls -la ~/.config/google-chrome/
+# Look for: Default, Profile 1, Profile 2, etc.
 ```
 
 **Fix:** The tool currently only checks the default profile. Switch to your default profile or modify the code to check multiple profiles.

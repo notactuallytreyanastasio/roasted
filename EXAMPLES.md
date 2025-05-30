@@ -178,11 +178,26 @@ I see you've been busy on the internet lately...
 
 You're using 4 different browsers. That's not productivity, that's digital hoarding! Pick a lane!
 
+Chrome, Edge, Brave, and Opera all at once? Someone has commitment issues.
+
 Your most visited site is stackoverflow.com with 23 visits. I'm not judging... okay, I'm totally judging.
 
 Remember, the internet wouldn't be the same without you.
 
 Privacy level: default, analyzed 89 visits
+```
+
+### Cross-Platform Roast
+```
+Let me paint you a picture of your online existence...
+
+You've got Edge pinned to your taskbar but you're still using Chrome 87% of the time. That's peak Windows user energy right there.
+
+37.5% of your browsing goes to github.com. At this point, you're not a developer, you're a digital archaeologist.
+
+Your commitment to chaos is almost admirable.
+
+Privacy level: default, analyzed 156 visits
 ```
 
 ---

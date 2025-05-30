@@ -121,7 +121,15 @@ fi
 # Check Claude Desktop config location
 echo ""
 echo "Checking Claude Desktop config..."
-CLAUDE_CONFIG="$HOME/Library/Application Support/Claude/claude_desktop_config.json"
+# Detect platform and set config path
+if [[ "$OSTYPE" == "msys" ]] || [[ "$OSTYPE" == "win32" ]]; then
+  CLAUDE_CONFIG="$APPDATA/Claude/claude_desktop_config.json"
+elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+  CLAUDE_CONFIG="$HOME/.config/Claude/claude_desktop_config.json"
+else
+  # macOS
+  CLAUDE_CONFIG="$HOME/Library/Application Support/Claude/claude_desktop_config.json"
+fi
 if [ -f "$CLAUDE_CONFIG" ]; then
     print_check "Claude Desktop config file exists"
     if grep -q "roasted" "$CLAUDE_CONFIG"; then
@@ -139,27 +147,63 @@ fi
 echo ""
 echo "Checking browser database access..."
 
-# Safari
-if [ -f "$HOME/Library/Safari/History.db" ]; then
-    if [ -r "$HOME/Library/Safari/History.db" ]; then
-        print_check "Safari history database accessible"
+# Platform-specific browser database paths
+if [[ "$OSTYPE" == "msys" ]] || [[ "$OSTYPE" == "win32" ]]; then
+    # Windows
+    CHROME_DB="$USERPROFILE/AppData/Local/Google/Chrome/User Data/Default/History"
+    
+    if [ -f "$CHROME_DB" ]; then
+        if [ -r "$CHROME_DB" ]; then
+            print_check "Chrome history database accessible"
+        else
+            print_warning "Chrome history database exists but not readable (permission issue)"
+        fi
     else
-        print_warning "Safari history database exists but not readable (permission issue)"
+        print_warning "Chrome history database not found"
     fi
+    
+    print_warning "Safari not available on Windows"
+    
+elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    # Linux
+    CHROME_DB="$HOME/.config/google-chrome/Default/History"
+    
+    if [ -f "$CHROME_DB" ]; then
+        if [ -r "$CHROME_DB" ]; then
+            print_check "Chrome history database accessible"
+        else
+            print_warning "Chrome history database exists but not readable (permission issue)"
+        fi
+    else
+        print_warning "Chrome history database not found"
+    fi
+    
+    print_warning "Safari not available on Linux"
+    
 else
-    print_warning "Safari history database not found"
-fi
+    # macOS
+    # Safari
+    if [ -f "$HOME/Library/Safari/History.db" ]; then
+        if [ -r "$HOME/Library/Safari/History.db" ]; then
+            print_check "Safari history database accessible"
+        else
+            print_warning "Safari history database exists but not readable (permission issue)"
+        fi
+    else
+        print_warning "Safari history database not found"
+    fi
 
-# Chrome
-CHROME_DB="$HOME/Library/Application Support/Google/Chrome/Default/History"
-if [ -f "$CHROME_DB" ]; then
-    if [ -r "$CHROME_DB" ]; then
-        print_check "Chrome history database accessible"
+    # Chrome
+    CHROME_DB="$HOME/Library/Application Support/Google/Chrome/Default/History"
+    if [ -f "$CHROME_DB" ]; then
+        if [ -r "$CHROME_DB" ]; then
+            print_check "Chrome history database accessible"
+        else
+            print_warning "Chrome history database exists but not readable (permission issue)"
+        fi
     else
-        print_warning "Chrome history database exists but not readable (permission issue)"
+        print_warning "Chrome history database not found"
     fi
-else
-    print_warning "Chrome history database not found"
 fi
 
 echo ""

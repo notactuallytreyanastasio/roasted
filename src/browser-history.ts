@@ -23,6 +23,7 @@ export interface HistoryExtractionOptions {
 
 export class BrowserHistoryExtractor {
   private readonly homeDir = os.homedir();
+  private readonly platform = os.platform();
 
   async extractHistory(options: HistoryExtractionOptions): Promise<BrowserHistoryEntry[]> {
     const cutoffDate = new Date();
@@ -31,7 +32,7 @@ export class BrowserHistoryExtractor {
 
     const allHistory: BrowserHistoryEntry[] = [];
 
-    if (options.includeSafari) {
+    if (options.includeSafari && this.platform === 'darwin') {
       try {
         const safariHistory = await this.extractSafariHistory(cutoffTimestamp);
         allHistory.push(...safariHistory);
@@ -104,31 +105,59 @@ export class BrowserHistoryExtractor {
   }
 
   private async extractChromeHistory(cutoffTimestamp: number): Promise<BrowserHistoryEntry[]> {
-    const chromePaths = [
-      "Library/Application Support/Google/Chrome/Default/History",
-      "Library/Application Support/Google/Chrome Beta/Default/History",
-      "Library/Application Support/Google/Chrome Canary/Default/History",
-      "Library/Application Support/Arc/User Data/Default/History",
-      "Library/Application Support/BraveSoftware/Brave-Browser/Default/History",
-    ];
-
+    const chromePaths = this.getChromePaths();
     const allHistory: BrowserHistoryEntry[] = [];
 
-    for (const relativePath of chromePaths) {
+    for (const { path: relativePath, name } of chromePaths) {
       const historyPath = path.join(this.homeDir, relativePath);
       
       if (fs.existsSync(historyPath)) {
         try {
-          const browserName = this.getBrowserNameFromPath(relativePath);
-          const history = await this.extractChromeHistoryFromPath(historyPath, cutoffTimestamp, browserName);
+          const history = await this.extractChromeHistoryFromPath(historyPath, cutoffTimestamp, name);
           allHistory.push(...history);
         } catch (error) {
-          console.error(`Failed to extract history from ${relativePath}:`, error);
+          console.error(`Failed to extract ${name} history:`, error);
         }
       }
     }
 
     return allHistory;
+  }
+
+  private getChromePaths(): Array<{path: string, name: string}> {
+    if (this.platform === 'win32') {
+      return [
+        { path: "AppData/Local/Google/Chrome/User Data/Default/History", name: "Chrome" },
+        { path: "AppData/Local/Google/Chrome Beta/User Data/Default/History", name: "Chrome Beta" },
+        { path: "AppData/Local/Google/Chrome SxS/User Data/Default/History", name: "Chrome Canary" },
+        { path: "AppData/Local/BraveSoftware/Brave-Browser/User Data/Default/History", name: "Brave" },
+        { path: "AppData/Local/Microsoft/Edge/User Data/Default/History", name: "Edge" },
+        { path: "AppData/Roaming/Opera Software/Opera Stable/History", name: "Opera" },
+        { path: "AppData/Local/Vivaldi/User Data/Default/History", name: "Vivaldi" },
+      ];
+    } else if (this.platform === 'linux') {
+      return [
+        { path: ".config/google-chrome/Default/History", name: "Chrome" },
+        { path: ".config/google-chrome-beta/Default/History", name: "Chrome Beta" },
+        { path: ".config/google-chrome-unstable/Default/History", name: "Chrome Dev" },
+        { path: ".config/BraveSoftware/Brave-Browser/Default/History", name: "Brave" },
+        { path: ".config/microsoft-edge/Default/History", name: "Edge" },
+        { path: ".config/opera/History", name: "Opera" },
+        { path: ".config/vivaldi/Default/History", name: "Vivaldi" },
+      ];
+    } else {
+      // macOS (darwin)
+      return [
+        { path: "Library/Application Support/Google/Chrome/Default/History", name: "Chrome" },
+        { path: "Library/Application Support/Google/Chrome Beta/Default/History", name: "Chrome Beta" },
+        { path: "Library/Application Support/Google/Chrome Canary/Default/History", name: "Chrome Canary" },
+        { path: "Library/Application Support/Arc/User Data/Default/History", name: "Arc" },
+        { path: "Library/Application Support/BraveSoftware/Brave-Browser/Default/History", name: "Brave" },
+        { path: "Library/Application Support/Microsoft Edge/Default/History", name: "Edge" },
+        { path: "Library/Application Support/com.operasoftware.Opera/History", name: "Opera" },
+        { path: "Library/Application Support/Vivaldi/Default/History", name: "Vivaldi" },
+      ];
+    }
   }
 
   private async extractChromeHistoryFromPath(
@@ -175,14 +204,6 @@ export class BrowserHistoryExtractor {
     }
   }
 
-  private getBrowserNameFromPath(path: string): string {
-    if (path.includes("Chrome Beta")) return "Chrome Beta";
-    if (path.includes("Chrome Canary")) return "Chrome Canary";
-    if (path.includes("Chrome")) return "Chrome";
-    if (path.includes("Arc")) return "Arc";
-    if (path.includes("Brave")) return "Brave";
-    return "Chrome-based";
-  }
 
   private getChromeTransitionType(transition: number): string {
     const types = {

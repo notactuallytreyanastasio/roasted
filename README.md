@@ -4,7 +4,7 @@ An MCP (Model Context Protocol) server that hilariously roasts you based on your
 
 ## 🎯 Features
 
-- **Multi-Browser Support**: Extracts history from Safari, Chrome, Chrome Beta, Chrome Canary, Arc, and Brave on macOS
+- **Multi-Browser Support**: Extracts history from Chrome, Edge, Brave, Opera, Vivaldi (and Safari on macOS)
 - **Intelligent Pattern Analysis**: Identifies procrastination habits, social media addiction, shopping sprees, and weird browsing hours
 - **Customizable Roast Intensity**: Choose from gentle ribbing to savage burns
 - **Privacy-First Design**: Built-in filtering for sensitive content (health, finance, dating sites)
@@ -14,10 +14,18 @@ An MCP (Model Context Protocol) server that hilariously roasts you based on your
 
 ### ⚡ Super Quick Setup (5 minutes)
 
+**Requirements:** Node.js 18+, Windows/macOS/Linux, Claude Desktop
+
 ```bash
-git clone <this-repo>
+git clone https://github.com/notactuallytreyanastasio/roasted.git
 cd roasted
-./setup.sh
+
+# Auto-detect your platform and run setup
+node setup-cross-platform.js
+
+# OR run platform-specific setup:
+# Windows: setup.bat
+# macOS/Linux: ./setup.sh
 ```
 
 **That's it!** The setup script handles everything automatically.
@@ -175,15 +183,15 @@ Got better roast material? Found a bug? Want to add support for more browsers?
 ## ⚠️ Disclaimers
 
 - **For Entertainment Only**: This tool is meant for fun, not psychological analysis
-- **macOS Only**: Currently only supports macOS browsers
+- **Cross-Platform**: Works on Windows, macOS, and Linux
 - **Browser Permissions**: May require additional system permissions to access browser databases
-- **Your Feelings**: We are not responsible for any emotional damage caused by accurate roasts
+- **Your Feelings**: We are not responsible for any emotional damage caused by accurate roasts  
 - **Productivity**: This tool may cause you to reflect on your digital habits (sorry)
 
 ## 🙋‍♀️ FAQ
 
 **Q: Will this work on Windows/Linux?**
-A: Currently macOS only, but we'd love contributions for other platforms!
+A: Yes! Now supports Windows, macOS, and Linux with automatic platform detection.
 
 **Q: Can I roast my friend's browser history?**
 A: Only if they run it on their machine. We don't support remote history access (that would be creepy).

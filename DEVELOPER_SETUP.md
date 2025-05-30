@@ -5,9 +5,15 @@
 ## ⚡ Quick Start (Automated)
 
 ```bash
-git clone <this-repo>
+git clone https://github.com/notactuallytreyanastasio/roasted.git
 cd roasted
-./setup.sh
+
+# Auto-detect platform and run setup
+node setup-cross-platform.js
+
+# OR run platform-specific setup:
+# Windows: setup.bat  
+# macOS/Linux: ./setup.sh
 ```
 
 The setup script will:
@@ -27,7 +33,7 @@ The setup script will:
 ### Step 1: Prerequisites Check
 
 **Required:**
-- **macOS** (sorry Windows/Linux friends, PRs welcome!)
+- **Windows, macOS, or Linux**
 - **Node.js 18+** ([download here](https://nodejs.org))
 - **Claude Desktop** ([download here](https://claude.ai/download))
 
@@ -40,7 +46,7 @@ npm -v   # Should show npm version
 ### Step 2: Install & Build
 
 ```bash
-git clone <this-repo>
+git clone https://github.com/notactuallytreyanastasio/roasted.git
 cd roasted
 npm install
 npm run build
@@ -72,9 +78,9 @@ Your browsing history tells quite a story!
 Add this to your Claude Desktop config file:
 
 **Config file location:**
-```
-~/Library/Application Support/Claude/claude_desktop_config.json
-```
+- **Windows:** `%APPDATA%\Claude\claude_desktop_config.json`
+- **macOS:** `~/Library/Application Support/Claude/claude_desktop_config.json`  
+- **Linux:** `~/.config/Claude/claude_desktop_config.json`
 
 **Add this configuration:**
 ```json

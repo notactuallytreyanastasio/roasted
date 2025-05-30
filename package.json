@@ -1,7 +1,7 @@
 {
   "name": "roasted-mcp",
   "version": "1.0.0",
-  "description": "An MCP server that roasts you based on your browser history",
+  "description": "Cross-platform MCP server that roasts you based on your browser history",
   "type": "module",
   "main": "dist/index.js",
   "bin": {
