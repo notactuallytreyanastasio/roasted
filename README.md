@@ -3,6 +3,8 @@
 
 An MCP (Model Context Protocol) server that hilariously roasts you based on your browser history patterns. Because someone needs to call out your 3 AM Wikipedia rabbit holes and your questionable shopping habits.
 
+> **⚠️ Getting `SQLITE_CANTOPEN` errors?** This is a permissions issue. **macOS users:** Grant Full Disk Access to Claude Desktop in System Settings → Privacy & Security. **Windows users:** Run as Administrator. See [TROUBLESHOOTING.md](TROUBLESHOOTING.md#-permission-issues) for detailed fixes.
+
 ## 🎯 Features
 
 - **Multi-Browser Support**: Extracts history from Chrome, Edge, Brave, Opera, Vivaldi (and Safari on macOS)
