@@ -31,12 +31,15 @@ export class BrowserHistoryExtractor {
     const cutoffTimestamp = cutoffDate.getTime();
 
     const allHistory: BrowserHistoryEntry[] = [];
+    const results: string[] = [];
 
     if (options.includeSafari && this.platform === 'darwin') {
       try {
         const safariHistory = await this.extractSafariHistory(cutoffTimestamp);
         allHistory.push(...safariHistory);
+        results.push(`Safari: ${safariHistory.length} entries`);
       } catch (error) {
+        results.push(`Safari: Failed (${error instanceof Error ? error.message : 'Unknown error'})`);
         console.error("Failed to extract Safari history:", error);
       }
     }
@@ -45,10 +48,14 @@ export class BrowserHistoryExtractor {
       try {
         const chromeHistory = await this.extractChromeHistory(cutoffTimestamp);
         allHistory.push(...chromeHistory);
+        results.push(`Chrome-based browsers: ${chromeHistory.length} entries`);
       } catch (error) {
+        results.push(`Chrome-based browsers: Failed (${error instanceof Error ? error.message : 'Unknown error'})`);
         console.error("Failed to extract Chrome history:", error);
       }
     }
+
+    console.error(`Browser extraction results: ${results.join(', ')}`);
 
     // Sort by visit time and deduplicate
     const sortedHistory = allHistory.sort((a, b) => b.visitTime.getTime() - a.visitTime.getTime());
@@ -107,6 +114,8 @@ export class BrowserHistoryExtractor {
   private async extractChromeHistory(cutoffTimestamp: number): Promise<BrowserHistoryEntry[]> {
     const chromePaths = this.getChromePaths();
     const allHistory: BrowserHistoryEntry[] = [];
+    const foundBrowsers: string[] = [];
+    const notFoundBrowsers: string[] = [];
 
     for (const { path: relativePath, name } of chromePaths) {
       const historyPath = path.join(this.homeDir, relativePath);
@@ -115,10 +124,19 @@ export class BrowserHistoryExtractor {
         try {
           const history = await this.extractChromeHistoryFromPath(historyPath, cutoffTimestamp, name);
           allHistory.push(...history);
+          foundBrowsers.push(`${name} (${history.length} entries)`);
         } catch (error) {
+          foundBrowsers.push(`${name} (failed: ${error instanceof Error ? error.message : 'Unknown error'})`);
           console.error(`Failed to extract ${name} history:`, error);
         }
+      } else {
+        notFoundBrowsers.push(name);
       }
+    }
+
+    console.error(`Chrome-based browsers found: ${foundBrowsers.length > 0 ? foundBrowsers.join(', ') : 'none'}`);
+    if (notFoundBrowsers.length > 0) {
+      console.error(`Chrome-based browsers not installed: ${notFoundBrowsers.join(', ')}`);
     }
 
     return allHistory;

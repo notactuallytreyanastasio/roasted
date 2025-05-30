@@ -3,7 +3,11 @@
 
 An MCP (Model Context Protocol) server that hilariously roasts you based on your browser history patterns. Because someone needs to call out your 3 AM Wikipedia rabbit holes and your questionable shopping habits.
 
-> **⚠️ Getting `SQLITE_CANTOPEN` errors?** This is a permissions issue. **macOS users:** Grant Full Disk Access to Claude Desktop in System Settings → Privacy & Security. **Windows users:** Run as Administrator. See [TROUBLESHOOTING.md](TROUBLESHOOTING.md#-permission-issues) for detailed fixes.
+> **⚠️ Common Issues:**
+> - **`SQLITE_CANTOPEN` errors:** Permissions issue. **macOS:** Grant Full Disk Access to Claude Desktop. **Windows:** Run as Administrator.
+> - **"Could not attach to MCP server":** Claude can't connect despite server running. Check config file path and restart Claude Desktop completely (⌘+Q, not just close window).
+> 
+> See [TROUBLESHOOTING.md](TROUBLESHOOTING.md) for detailed fixes.
 
 ## 🎯 Features
 

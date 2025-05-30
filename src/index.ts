@@ -164,7 +164,12 @@ class RoastedMCPServer {
         content: [
           {
             type: "text",
-            text: "I tried to roast your browser history, but after applying privacy filters, there's nothing left to roast! Either you're incredibly boring or incredibly private. I'm going with boring. 😴",
+            text: "I tried to roast your browser history, but found nothing to roast! This could be because:\n\n" +
+                  "• **No browser history found** - Check the logs above to see which browsers were checked\n" +
+                  "• **Privacy filters removed everything** - Try setting `exclude_sensitive: false` for more lenient filtering\n" +
+                  "• **Permission issues** - On macOS, grant Full Disk Access to Claude Desktop in System Settings\n" +
+                  "• **Recent browser activity** - Make sure you've browsed normally in the last " + days + " days\n\n" +
+                  "Either you're incredibly boring, incredibly private, or there's a technical issue. I'm going with boring. 😴",
           },
         ],
       };
